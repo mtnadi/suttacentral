@@ -35,6 +35,7 @@ export class SCTextPageSelector extends LitLocalized(LitElement) {
     suttaReference: { type: Object, state: true },
     suttaComment: { type: Object, state: true },
     suttaVariant: { type: Object, state: true },
+    suttaPerson: { type: Object, state: true },
     suttaMarkup: { type: String, state: true },
     markup: { type: String, state: true },
     bilaraSuttaMarkup: { type: String, state: true },
@@ -147,6 +148,7 @@ export class SCTextPageSelector extends LitLocalized(LitElement) {
             .suttaComment=${this.suttaComment}
             .suttaReference=${this.suttaReference}
             .suttaVariant=${this.suttaVariant}
+            .suttaPerson=${this.suttaPerson}
             .suttaId=${this.suttaId}
             .isRangeSutta=${this.isRangeSutta}
             .range_uid=${this.range_uid}
@@ -504,6 +506,7 @@ export class SCTextPageSelector extends LitLocalized(LitElement) {
       this.suttaReference = bilaraData.reference_text;
       this.suttaComment = bilaraData.comment_text;
       this.suttaVariant = bilaraData.variant_text;
+      this.suttaPerson = bilaraData.person_text;
     } catch (error) {
       this.lastError = error;
     }

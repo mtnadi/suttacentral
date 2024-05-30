@@ -43,6 +43,7 @@ export class SCTextBilara extends SCTextCommon {
     suttaReference: { type: Object },
     suttaComment: { type: Object },
     suttaVariant: { type: Object },
+    suttaPerson: { type: Object },
     chosenTextView: { type: String },
     displayedReferences: { type: Array },
     chosenNoteDisplayType: { type: String },
@@ -192,6 +193,7 @@ export class SCTextBilara extends SCTextCommon {
       }
       this._addVariantText();
       this._addCommentText();
+      this._addPersonMarker();
       this._paliLookupStateChanged();
       this._chineseLookupStateChanged();
       this._showHighlightingChanged();
@@ -417,6 +419,16 @@ export class SCTextBilara extends SCTextCommon {
         e.currentTarget.style.height = this.commentSpanRectInfo.get(e.currentTarget.id);
         e.currentTarget.style.zIndex = '1';
       };
+    });
+  }
+
+  _addPersonMarker() {
+    if (!this.suttaPerson || this._articleElement().length === 0) {
+      return;
+    }
+    Object.entries(this.suttaPerson).forEach(([key, value]) => {
+      const segmentSpan = this.querySelector(`#${CSS.escape(key)}`);
+      segmentSpan?.setAttribute('data-person', value);
     });
   }
 
