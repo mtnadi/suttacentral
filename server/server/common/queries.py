@@ -679,6 +679,12 @@ FOR v, e, p IN 0..6 OUTBOUND CONCAT('super_nav_details/', @uid) super_nav_detail
         RETURN volpage.volpage
     )[0]
 
+    LET place_file = (
+        FOR doc IN sc_bilara_texts
+            FILTER doc.uid == v.uid AND 'place' IN doc.muids
+            RETURN doc.file_path
+    )[0]
+
     RETURN {
         acronym: v.acronym,
         volpages: volpages,
@@ -697,6 +703,7 @@ FOR v, e, p IN 0..6 OUTBOUND CONCAT('super_nav_details/', @uid) super_nav_detail
         biblio: biblio,
         priority_author_uid: priority_author,
         verseNo: references,
+        place_file: place_file,
     }
 '''
 

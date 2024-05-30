@@ -226,6 +226,7 @@ export class SCSuttaplex extends LitLocalized(LitElement) {
           ${this.isSuttaInRangeSutta ? '' : this.nerdyRowTemplate}
         </div>
         ${this.#blurbTemplate()}
+        ${this.#placeTemplate()}
         ${this.#shouldShowUserLangTranslations() ? this.userLanguageTranslationsTemplate : ''}
         ${!this.isCompact
           ? html`
@@ -247,6 +248,19 @@ export class SCSuttaplex extends LitLocalized(LitElement) {
             <div
               class="blurb"
               .innerHTML=${this.item.blurb}
+            ></div>
+          `}
+        `
+      : '';
+  }
+
+  #placeTemplate() {
+    return !this.isCompact
+      ? html`
+          ${this.item.places &&
+          html`
+            <div
+              .innerHTML=${this.item.places}
             ></div>
           `}
         `

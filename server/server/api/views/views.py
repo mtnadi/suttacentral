@@ -334,6 +334,8 @@ class SuttaplexList(Resource):
                         type: number
                     original_title:
                         type: string
+                    places:
+                        type: array
                     type:
                         type: string
                     translations:
@@ -373,6 +375,8 @@ class SuttaplexList(Resource):
                     'name': difficulties[result['difficulty']],
                     'level': result['difficulty'],
                 }
+            if result['place_file']:
+                result['places'] = self.all_places(result['place_file'])
             parent = None
             try:
                 parent = edges[_from]
@@ -459,6 +463,16 @@ class SuttaplexList(Resource):
                 if len(all_verse) > 1
                 else ' '.join(all_verse).replace('vns', 'Verse ')
             )
+
+    def all_places(self, place_file):
+        if place_file:
+            unique_places = set()
+            file_content = json_load(place_file)
+            for segment, places in file_content.items():
+                unique_places.update(places.split(", "))
+            return list(unique_places)
+        else:
+            return []
 
 
 class RangeSuttaplexList(Resource):
