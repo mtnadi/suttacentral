@@ -1280,7 +1280,16 @@ def highlight_by_multiple_possible_keyword(
     keyword,
     is_segmented_text
 ):
-    possible_word_list = [f'{keyword}']
+
+    # If not a literal search, split on spaces and punctuation.
+    # Until #2918, take all searches to be non-literal.
+    ignore_chars = [',', '.', '-', ';', ':', '?', '!']
+    possible_word_list = keyword.split()
+    for c in ignore_chars:
+        for word in possible_word_list:
+            if c in word:
+                possible_word_list.extend(w for w in word.split(c) if w)
+
     for word in possible_word_list:
         cut_highlight(content, hit, word, is_segmented_text)
         if hit['highlight']['content']:
